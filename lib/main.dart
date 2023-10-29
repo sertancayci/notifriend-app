@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:notifriend/pages/login_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notifriend/pages/Home/home_page..dart';
+import 'package:notifriend/pages/Login/login_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  LoginPage(),
+      home:  HomePage(),
     );
   }
 }
