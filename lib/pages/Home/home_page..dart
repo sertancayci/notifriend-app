@@ -33,6 +33,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         children: <Widget>[
           _lastNotificationSection(context, ref),
           _forYouChannelSection(context, ref),
+          _channelsSection(context, ref),
         ],
       ),
     );
@@ -100,6 +101,53 @@ class _HomePageState extends ConsumerState<HomePage> {
      ],
    );
  }
+
+  Widget _channelsSection(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text('Channeld'),
+          trailing: TextButton(
+            onPressed: () {
+              // Handle "See All" button tap
+            },
+            child: Text('See All'),
+          ),
+        ),
+        Container(
+          height: 192, // Adjust the height as needed
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // You can adjust the number of columns
+              crossAxisSpacing: 8, // Adjust the spacing as needed
+              mainAxisSpacing: 8, // Adjust the spacing as needed
+            ),
+            itemCount: 8, // Number of grid items
+            itemBuilder: (context, index) {
+              return _buildGridItem(index);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _buildGridItem(int index) {
+    return Column(
+      children: [
+        Image.asset('assets/channel_image_$index.png'), // Provide the image path
+        Text(
+          'Channel $index',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
 
 
 }
