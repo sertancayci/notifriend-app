@@ -132,7 +132,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-
   Widget _buildGridItem(int index) {
     return Column(
       children: [

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/pages/Home/home_page..dart';
 import 'package:notifriend/pages/Login/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+late SharedPreferences storage;
 
 void main() {
   // runApp(const MyApp());

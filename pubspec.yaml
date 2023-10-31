@@ -42,16 +42,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  #core
   flutter_lints: ^2.0.0
   riverpod_generator: ^3.0.0-dev.5
   riverpod_lint: ^2.3.2
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  dio: ^5.3.3
+  fpdart: ^1.1.0
+  quiver: ^3.2.1
+  intl: ^0.18.1
+  connectivity_plus: ^5.0.1
+  shared_preferences: ^2.2.2
 
 # The following section is specific to Flutter packages.
 flutter:
