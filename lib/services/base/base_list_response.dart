@@ -2,21 +2,17 @@ class BaseListResponse<T> {
   BaseListResponse({
     required this.currentPage,
     required this.pageCount,
-    required this.pageSize,
-    required this.rowCount,
-    required this.totalPages,
-    required this.showPrevious,
-    required this.showNext,
-    this.results,
+    required this.totalCount,
+    this.data,
   });
 
   factory BaseListResponse.fromJson(
     Map<String, dynamic> json,
     T Function(Object json) fromJsonT,
   ) {
-    List<T>? results;
-    if (json['results'] != null) {
-      results = (json['results'] as List<dynamic>).map((e) {
+    List<T>? data;
+    if (json['data'] != null) {
+      data = (json['data'] as List<dynamic>).map((e) {
         if (e is int)
           return e as T;
         else
@@ -27,41 +23,16 @@ class BaseListResponse<T> {
     }
 
     return BaseListResponse(
-      currentPage: json['currentPage'] as int,
-      pageCount: json['pageCount'] as int,
-      pageSize: json['pageSize'] as int,
-      rowCount: json['rowCount'] as int,
-      totalPages: json['totalPages'] as int,
-      showPrevious: json['showPrevious'] as bool,
-      showNext: json['showNext'] as bool,
-      results: results,
+      currentPage: json['meta']['current_page'] as int,
+      pageCount: json['meta']['last_page'] as int,
+      totalCount: json['meta']['total'] as int,
+      data: data,
     );
   }
 
   final int currentPage;
   final int pageCount;
-  final int pageSize;
-  final int rowCount;
-  final int totalPages;
-  final bool showPrevious;
-  final bool showNext;
-  final List<T>? results;
+  final int totalCount;
+  final List<T>? data;
 }
-//
-// BaseListResponse<T> baseResponseFromJson<T>(
-//     Map<String, dynamic> json, T Function(Object)? fromJsonT) {
-//   T? data;
-//   if (fromJsonT != null && json['data'] != null) {
-//     data = fromJsonT(json['data'] as Map<String, dynamic>);
-//   } else if (fromJsonT != null) {
-//     data = fromJsonT(json);
-//   }
-//   return BaseListResponse(
-//     isSuccess: json['isSuccess'] as bool,
-//     resultType: json['resultType'] as int,
-//     message: (json['message'] != null && isNotBlank(json['message'] as String))
-//         ? json['message'] as String
-//         : null,
-//     data: data,
-//   );
-// }
+

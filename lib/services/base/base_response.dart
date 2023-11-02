@@ -59,28 +59,3 @@ class ErrorResponse {
   final int? code;
   final int? errorCode;
 }
-
-// BaseResponse<T> baseResponseFromJson<T>(
-//     Map<String, dynamic> json, T Function(Object)? fromJsonT) {
-//   T? data;
-//   if (fromJsonT != null && json['data'] != null) {
-//     data = fromJsonT(json['data'] as Map<String, dynamic>);
-//   } else if (fromJsonT != null) {
-//     data = fromJsonT(json);
-//   }
-//   return BaseResponse(
-//     result: json['isSuccess'] as bool,
-//     message: (json['message'] != null && isNotBlank(json['message'] as String))
-//         ? json['message'] as String
-//         : null,
-//     data: data,
-//   );
-// }
-//
-// BaseResponse<T> baseResponseFromJsonList<T>(
-//     List<dynamic> json, T Function(Object json)? fromJsonT) {
-//   var data;
-//
-//   if (fromJsonT != null) data = fromJsonT(json);
-//   return BaseResponse(data: data);
-// }

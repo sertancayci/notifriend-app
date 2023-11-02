@@ -1,6 +1,7 @@
 
 import 'package:fpdart/fpdart.dart';
 import 'package:notifriend/core/rest_client.dart';
+import 'package:notifriend/models/notification/notification_response.dart';
 
 import '../../services/base/base_response.dart';
 import '../../services/base/base_list_response.dart';
@@ -9,14 +10,14 @@ import '../../services/base/base_list_response.dart';
 class NotificationRepository {
   NotificationRepository({required this.client});
 
-  final String serviceUrlPath = 'Mobile/v2/Notification/';
+  final String serviceUrlPath = 'notification';
   RestClient client;
 
   Future<BaseResponse<BaseListResponse<NotificationResponse>>> getNotifications(
       {int? pageSize}) async {
     {
       final response = await client.get(
-        '${serviceUrlPath}notification?PageSize=99999&PageIndex=1',
+        '${serviceUrlPath}list?PageSize=99999&PageIndex=1',
       );
       final BaseResponse<BaseListResponse<NotificationResponse>> result =
           BaseResponse<BaseListResponse<NotificationResponse>>.fromJson(
