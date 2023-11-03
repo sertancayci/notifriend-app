@@ -2,6 +2,7 @@ class BaseListResponse<T> {
   BaseListResponse({
     required this.currentPage,
     required this.pageCount,
+    required this.perPage,
     required this.totalCount,
     this.data,
   });
@@ -25,6 +26,7 @@ class BaseListResponse<T> {
     return BaseListResponse(
       currentPage: json['meta']['current_page'] as int,
       pageCount: json['meta']['last_page'] as int,
+      perPage: json['meta']['per_page'] as int,
       totalCount: json['meta']['total'] as int,
       data: data,
     );
@@ -32,6 +34,7 @@ class BaseListResponse<T> {
 
   final int currentPage;
   final int pageCount;
+  final int perPage;
   final int totalCount;
   final List<T>? data;
 }

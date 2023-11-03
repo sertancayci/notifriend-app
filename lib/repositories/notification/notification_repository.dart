@@ -14,10 +14,10 @@ class NotificationRepository {
   RestClient client;
 
   Future<BaseResponse<BaseListResponse<NotificationResponse>>> getNotifications(
-      {int? pageSize}) async {
+      {int? pageSize, int? perPage, int? currentPage}) async {
     {
       final response = await client.get(
-        '${serviceUrlPath}list?PageSize=99999&PageIndex=1',
+        '${serviceUrlPath}list?perPage=$perPage&currentPage=$currentPage',
       );
       final BaseResponse<BaseListResponse<NotificationResponse>> result =
           BaseResponse<BaseListResponse<NotificationResponse>>.fromJson(
