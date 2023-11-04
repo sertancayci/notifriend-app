@@ -17,11 +17,10 @@ class NotificationService {
     return response.data!.data!;
   }
 
-  Future<bool> deleteNotification(String id) async {
-    final response = await _notificationRepository.deleteNotifications([id]);
-
-    return true;
-  }
+  // Future<bool> deleteNotification(String id) async {
+  //   final response = await _notificationRepository.deleteNotifications([id]);
+  //
+  // }
 
   Future<bool> deleteNotifications(List<String> ids) async {
     final response = await _notificationRepository.deleteNotifications(ids);

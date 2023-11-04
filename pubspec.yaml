@@ -47,6 +47,7 @@ dev_dependencies:
   riverpod_generator: ^3.0.0-dev.5
   riverpod_lint: ^2.3.2
   dio: ^5.3.3
+  get_it: ^7.6.4
   fpdart: ^1.1.0
   quiver: ^3.2.1
   intl: ^0.18.1

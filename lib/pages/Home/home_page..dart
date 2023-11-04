@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notifriend/pages/Home/home_page_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -11,11 +12,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   final nameProvider = Provider<String>((ref) => 'Your Name');
 
-  final notificationsProvider = Provider<List<String>>((ref) => [
-    'Notification 1',
-    'Notification 2',
-    // Add more notifications
-  ]);
+  final homeProvider = StateNotifierProvider<HomeNotifier,HomeState>((ref) => HomeNotifier());
 
   final forYouItemsProvider = Provider<List<String>>((ref) => [
     'Item 1',
@@ -40,6 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
  Widget _lastNotificationSection(BuildContext context, WidgetRef ref) {
+   final lastNotifications = ref.watch(homeProvider).notifications;
    return Column(
      children: <Widget>[
        ListTile(
@@ -55,7 +53,7 @@ class _HomePageState extends ConsumerState<HomePage> {
          height: 80, // Adjust the height as needed
          child: ListView.builder(
            scrollDirection: Axis.horizontal,
-           itemCount: ref.watch(notificationsProvider).length,
+           itemCount: lastNotifications!.length,
            itemBuilder: (context, index) {
              return CircleAvatar(
                radius: 30, // Adjust the size as needed
