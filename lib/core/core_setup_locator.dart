@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:notifriend/core/rest_client.dart';
 import 'package:notifriend/core/services/navigation_service.dart';
 import 'package:notifriend/core/services/storage/storage_service.dart';
 import 'package:notifriend/main.dart';
+import 'package:notifriend/repositories/notification/notification_repository.dart';
 
 
 class CoreSetupLocator {
@@ -27,6 +29,7 @@ class CoreSetupLocator {
         // );
         return dio;
       })
+
       ..registerLazySingleton<NavigationService>(() => NavigationService())
       ..registerLazySingleton<StorageService>(() => StorageService());
   }

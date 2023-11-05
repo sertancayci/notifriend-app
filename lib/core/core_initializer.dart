@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:notifriend/core/core_setup_locator.dart';
 import 'package:notifriend/core/ui/loading_overlay.dart';
 
@@ -6,6 +7,7 @@ class CoreInitializer {
 
   static Future<void> initialize() async {
     // await initializeDateFormatting();
+
     await CoreSetupLocator.setupLocator();
     LoadingOverlay.setup();
     // await Firebase.initializeApp(

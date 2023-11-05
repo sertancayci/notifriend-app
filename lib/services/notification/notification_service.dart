@@ -1,13 +1,15 @@
 
+import 'package:notifriend/core/services/storage/storage_service.dart';
 import 'package:notifriend/models/notification/notification_response.dart';
 import 'package:notifriend/repositories/notification/notification_repository.dart';
 
 class NotificationService {
-  NotificationService({
-    required NotificationRepository notificationRepository,
-  }) {
-    _notificationRepository = notificationRepository;
-  }
+
+  NotificationRepository notificationRepository;
+  StorageService storageService;
+
+  NotificationService({required this.notificationRepository, required this.storageService});
+
 
   late NotificationRepository _notificationRepository;
 
@@ -17,14 +19,4 @@ class NotificationService {
     return response.data!.data!;
   }
 
-  // Future<bool> deleteNotification(String id) async {
-  //   final response = await _notificationRepository.deleteNotifications([id]);
-  //
-  // }
-
-  Future<bool> deleteNotifications(List<String> ids) async {
-    final response = await _notificationRepository.deleteNotifications(ids);
-
-    return true;
-  }
 }

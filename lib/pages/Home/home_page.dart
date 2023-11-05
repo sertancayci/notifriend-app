@@ -14,6 +14,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   final homeProvider = StateNotifierProvider<HomeNotifier,HomeState>((ref) => HomeNotifier());
 
+
   final forYouItemsProvider = Provider<List<String>>((ref) => [
     'Item 1',
     'Item 2',
@@ -22,6 +23,10 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    // final homeProvider = Provider<HomeNotifier>(
+    //         (ref) => HomeNotifier(buildContext: context));
+
     return  Scaffold(
       appBar: AppBar(
         title: Text('Hello ${ref.watch(nameProvider)}'),
@@ -38,7 +43,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
  Widget _lastNotificationSection(BuildContext context, WidgetRef ref) {
    final lastNotifications = ref.watch(homeProvider).notifications;
-   return Column(
+   return lastNotifications != null ? Column(
      children: <Widget>[
        ListTile(
          title: Text('Last Notification'),
@@ -63,7 +68,7 @@ class _HomePageState extends ConsumerState<HomePage> {
          ),
        ),
      ],
-   );
+   ) : Container();
  }
 
  Widget _forYouChannelSection(BuildContext context, WidgetRef ref) {

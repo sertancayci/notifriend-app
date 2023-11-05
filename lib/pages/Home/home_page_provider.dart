@@ -18,3 +18,30 @@ class HomeState {
 
   final List<NotificationResponse>? notifications;
 }
+
+//
+// class HomeNotifier extends BaseChangeNotifier with AppServices {
+//   HomeNotifier({required super.buildContext}) {
+//     logger.i('HomeNotifier');
+//     init();
+//   }
+//
+//   List<NotificationResponse> _notificationList = [];
+//
+//   List<NotificationResponse> get notificationList => _notificationList;
+//
+//   set notificationList(List<NotificationResponse> value) {
+//     _notificationList = value;
+//     notifyListeners();
+//   }
+//
+//   Future<void> init() async {
+//     final notificationListResponse =
+//     await notificationService.getNotifications();
+//
+//     notificationList = notificationListResponse;
+//
+//     viewState = ViewState.Idle;
+//     dataState = DataState.HasData;
+//   }
+// }
