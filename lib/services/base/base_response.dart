@@ -1,5 +1,5 @@
 class BaseResponse<T> {
-  BaseResponse({required this.result, this.data, required this.errors});
+  BaseResponse({ this.result, this.data, this.errors});
 
   factory BaseResponse.fromJson(
     Map<String, dynamic> json,
@@ -21,22 +21,18 @@ class BaseResponse<T> {
     }
 
     return BaseResponse(
-      result: json['result'] as bool,
-      errors: (json['errors'] as List<dynamic>?)
-              ?.map((e) => ErrorResponse.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      // message:
-      //     (json['message'] != null && isNotBlank(json['message'] as String))
-      //         ? json['message'] as String
-      //         : null,
+      // result: json['result'] as bool,
+      // errors: (json['errors'] as List<dynamic>?)
+      //         ?.map((e) => ErrorResponse.fromJson(e as Map<String, dynamic>))
+      //         .toList() ??
+      //     [],
       data: data,
     );
   }
 
   final T? data;
-  final bool result;
-  final List<ErrorResponse> errors;
+  final bool? result;
+  final List<ErrorResponse>? errors;
 // final String? message;
 }
 

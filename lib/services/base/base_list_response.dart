@@ -14,14 +14,19 @@ class BaseListResponse<T> {
     List<T>? data;
     if (json['data'] != null) {
       data = (json['data'] as List<dynamic>).map((e) {
-        if (e is int)
-          return e as T;
-        else
-          return fromJsonT(e as Map<String, dynamic>);
-      })
-          // fromJsonT(e as Map<String, dynamic>); })
-          .toList(); //fromJsonT(json['data'] as List<dynamic>);
+        return fromJsonT(e);
+      }).toList();
     }
+    // if (json['data'] != null ) {
+    //   data = (json['data'] as List<dynamic>).map((e) {
+    //     if (e is int)
+    //       return e as T;
+    //     else
+    //       return fromJsonT(e as Map<String, dynamic>);
+    //   })
+    //       // fromJsonT(e as Map<String, dynamic>); })
+    //       .toList(); //fromJsonT(json['data'] as List<dynamic>);
+    // }
 
     return BaseListResponse(
       currentPage: json['meta']['current_page'] as int,

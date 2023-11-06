@@ -5,18 +5,37 @@ import 'package:notifriend/models/notification/notification_response.dart';
 class HomeNotifier extends StateNotifier<HomeState> with AppServices {
   HomeNotifier() : super(HomeState());
 
-  Future<void> init() async {
+  Future<void> fetchNotifications() async {
     final List<NotificationResponse> notificationList =
         await notificationService.getNotifications();
 
-    state = HomeState(notifications: notificationList);
+    state = state.copyWith(notifications: notificationList);
+  }
+
+  Future<void> init() async {
+    state = state.copyWith(isLoading: true);
+    await fetchNotifications();
+    state = state.copyWith(isLoading: false);
   }
 }
 
+
+
+
+
 class HomeState {
-  HomeState({this.notifications});
+  HomeState({this.notifications, this.isLoading});
 
   final List<NotificationResponse>? notifications;
+  final bool? isLoading;
+
+  HomeState copyWith({List<NotificationResponse>? notifications,bool? isLoading}) {
+    return HomeState(
+      notifications: notifications ?? this.notifications,
+      isLoading: isLoading ?? this.isLoading,
+    );
+  }
+
 }
 
 //

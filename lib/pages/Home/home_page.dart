@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/pages/Home/home_page_provider.dart';
 
+
+final homeProvider = StateNotifierProvider<HomeNotifier,HomeState>((ref) => HomeNotifier());
+
+
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -12,14 +17,17 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   final nameProvider = Provider<String>((ref) => 'Your Name');
 
-  final homeProvider = StateNotifierProvider<HomeNotifier,HomeState>((ref) => HomeNotifier());
-
-
   final forYouItemsProvider = Provider<List<String>>((ref) => [
     'Item 1',
     'Item 2',
     // Add more items
   ]);
+
+  void initState() {
+    super.initState();
+    ref.read(homeProvider.notifier).fetchNotifications();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +42,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: Column(
         children: <Widget>[
           _lastNotificationSection(context, ref),
-          _forYouChannelSection(context, ref),
-          _channelsSection(context, ref),
+          // _forYouChannelSection(context, ref),
+          // _channelsSection(context, ref),
         ],
       ),
     );

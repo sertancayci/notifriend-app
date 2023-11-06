@@ -12,24 +12,24 @@ class NotificationResponse {
 
   factory NotificationResponse.fromJson(Map<String, dynamic> json) {
     return NotificationResponse(
-      id: json['id'] as String,
-      senderUserId: json['sender_user_id'] as String,
-      receiverUserId: json['receiver_user_id'] as String,
-      messageId: json['message_id'] as String,
-      isSent: json['is_sent'] as bool,
-      isRead: json['is_read'] as bool,
+      id: json['id'] as int,
+      senderUserId: json['sender_user_id'] as int,
+      receiverUserId: json['receiver_user_id'] as int,
+      messageId: json['message_id'] as int,
+      isSent: json['is_sent'] as int,
+      isRead: json['is_read'] as int,
       createdAt: json['created_at'] as String,
       updatedAt: json['updated_at'] as String?,
       deletedAt: json['deleted_at'] as String?,
     );
   }
 
-  final String id;
-  final String senderUserId;
-  final String receiverUserId;
-  final String messageId;
-  final bool isSent;
-  final bool isRead;
+  final int id;
+  final int senderUserId;
+  final int receiverUserId;
+  final int messageId;
+  final int isSent;
+  final int isRead;
   final String createdAt;
   final String? updatedAt;
   final String? deletedAt;

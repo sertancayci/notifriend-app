@@ -11,7 +11,7 @@ import 'package:quiver/strings.dart';
 class RestClient {
   RestClient(this.dio, this.storageService);
 
-  final String _baseUrl = 'http://localhost:8086/api/v1/';
+  final String _baseUrl = 'http://192.168.1.24:8086/api/v1/';
   final StorageService storageService;
 
   final Dio dio;
@@ -32,15 +32,16 @@ class RestClient {
           await dio.post<dynamic>(url, data: data, options: options);
       if (future.statusCode! >= 200 && future.statusCode! < 300) {
         // check if response data isSuccess props is not true
-        final BaseResponse<dynamic> result = BaseResponse<dynamic>.fromJson(
-          future.data as Map<String, dynamic>,
-          (json) => json,
-        );
-        if (!result.result) {
-          throw ApiException(message: result.errors.message);
-        } else {
-          return future;
-        }
+        return future;
+        // final BaseResponse<dynamic> result = BaseResponse<dynamic>.fromJson(
+        //   future.data as Map<String, dynamic>,
+        //   (json) => json,
+        // );
+        // if (!result.result) {
+        //   throw ApiException(message: result.errors.message);
+        // } else {
+        //   return future;
+        // }
       } else {
         throw UnexpectedErrorException();
       }
@@ -78,15 +79,16 @@ class RestClient {
           await dio.put<dynamic>(url, data: data, options: options);
       if (future.statusCode! >= 200 && future.statusCode! < 300) {
         // check if response data isSuccess props is not true
-        final BaseResponse<dynamic> result = BaseResponse<dynamic>.fromJson(
-          future.data as Map<String, dynamic>,
-          (json) => json,
-        );
-        if (!result.result) {
-          throw ApiException(message: result.errors.message);
-        } else {
-          return future;
-        }
+        return future;
+        // final BaseResponse<dynamic> result = BaseResponse<dynamic>.fromJson(
+        //   future.data as Map<String, dynamic>,
+        //   (json) => json,
+        // );
+        // if (!result.result) {
+        //   throw ApiException(message: result.errors.message);
+        // } else {
+        //   return future;
+        // }
       } else {
         throw UnexpectedErrorException();
       }
@@ -124,15 +126,16 @@ class RestClient {
           await dio.delete<dynamic>(url, data: data, options: options);
       if (future.statusCode! >= 200 && future.statusCode! < 300) {
         // check if response data isSuccess props is not true
-        final BaseResponse<dynamic> result = BaseResponse<dynamic>.fromJson(
-          future.data as Map<String, dynamic>,
-          (json) => json,
-        );
-        if (!result.result) {
-          throw ApiException(message: result.errors.message);
-        } else {
-          return future;
-        }
+        return future;
+        // final BaseResponse<dynamic> result = BaseResponse<dynamic>.fromJson(
+        //   future.data as Map<String, dynamic>,
+        //   (json) => json,
+        // );
+        // if (!result.result) {
+        //   throw ApiException(message: result.errors.message);
+        // } else {
+        //   return future;
+        // }
       } else {
         throw UnexpectedErrorException();
       }
@@ -159,22 +162,24 @@ class RestClient {
       url = _baseUrl + url;
 
       var options = Options();
-      options = await _prepareCall();
+      options =  await _prepareCallCache(options);
       options.headers!['Content-Type'] = 'application/json';
       options.headers!['Accept'] = 'application/json';
 
       final Response<dynamic> future =
           await dio.get<dynamic>(url, options: options);
       if (future.statusCode! >= 200 && future.statusCode! < 305) {
-        final BaseResponse<dynamic> result = BaseResponse<dynamic>.fromJson(
-          future.data as Map<String, dynamic>,
-          (json) => json,
-        );
-        if (!result.result) {
-          throw ApiException(message: result.errors.message);
-        } else {
-          return future;
-        }
+        // check if response data isSuccess props is not true
+        return future;
+        // final BaseResponse<dynamic> result = BaseResponse<dynamic>.fromJson(
+        //   future.data as Map<String, dynamic>,
+        //   (json) => json,
+        // );
+        // if (!result.result) {
+        //   throw ApiException(message: result.errors.message);
+        // } else {
+        //   return future;
+        // }
       } else {
         throw UnexpectedErrorException();
       }
@@ -206,6 +211,20 @@ class RestClient {
 
     return options;
   }
+
+  Future<Options> _prepareCallCache(Options options) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      throw InternetNotConnectedException();
+    }
+    if (options.headers == null) {
+      options.headers = {};
+    }
+    // await _appendAuth(options);
+
+    return options;
+  }
+
 
   Future<void> _appendAuth(Options options) async {
     final String? token = await storageService.getAuthToken();

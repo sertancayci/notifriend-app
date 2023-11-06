@@ -5,18 +5,17 @@ import 'package:notifriend/repositories/notification/notification_repository.dar
 
 class NotificationService {
 
-  NotificationRepository notificationRepository;
-  StorageService storageService;
 
   NotificationService({required this.notificationRepository, required this.storageService});
 
+  NotificationRepository notificationRepository;
+  StorageService storageService;
 
-  late NotificationRepository _notificationRepository;
 
   Future<List<NotificationResponse>> getNotifications() async {
-    final response = await _notificationRepository.getNotifications();
+    final response = await notificationRepository.getNotifications();
 
-    return response.data!.data!;
+    return response.data!;
   }
 
 }

@@ -10,27 +10,27 @@ import '../../services/base/base_list_response.dart';
 class NotificationRepository {
   NotificationRepository({required this.client});
 
-  final String serviceUrlPath = 'notification';
+  final String serviceUrlPath = 'notification/';
   RestClient client;
 
-  Future<BaseResponse<BaseListResponse<NotificationResponse>>> getNotifications(
+
+
+  Future<BaseListResponse<NotificationResponse>> getNotifications(
       {int? pageSize, int? perPage, int? currentPage}) async {
     {
       final response = await client.get(
-        '${serviceUrlPath}list?perPage=$perPage&currentPage=$currentPage',
+        '${serviceUrlPath}list',
       );
-      final BaseResponse<BaseListResponse<NotificationResponse>> result =
-          BaseResponse<BaseListResponse<NotificationResponse>>.fromJson(
-        response.data as Map<String, dynamic>,
-        (json) => BaseListResponse<NotificationResponse>.fromJson(
-          json as Map<String, dynamic>,
+      final BaseListResponse<NotificationResponse> result =
+        BaseListResponse<NotificationResponse>.fromJson(
+          response.data as Map<String, dynamic>,
           (json) => NotificationResponse.fromJson(
             json as Map<String, dynamic>,
           ),
-        ),
-      );
+        );
 
       return result;
+
     }
   }
 
