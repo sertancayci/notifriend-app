@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/pages/Home/home_page_provider.dart';
+import 'package:notifriend/pages/widgets/network_image_loading_widget.dart';
 
 
 final homeProvider = StateNotifierProvider<HomeNotifier,HomeState>((ref) => HomeNotifier());
@@ -26,6 +27,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     ref.read(homeProvider.notifier).fetchNotifications();
+    ref.read(homeProvider.notifier).fetchChannels();
   }
 
 
@@ -43,7 +45,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         children: <Widget>[
           _lastNotificationSection(context, ref),
           // _forYouChannelSection(context, ref),
-          // _channelsSection(context, ref),
+          _channelsSection(context, ref),
         ],
       ),
     );
@@ -68,9 +70,22 @@ class _HomePageState extends ConsumerState<HomePage> {
            scrollDirection: Axis.horizontal,
            itemCount: lastNotifications!.length,
            itemBuilder: (context, index) {
-             return CircleAvatar(
-               radius: 30, // Adjust the size as needed
-               backgroundImage: AssetImage('assets/notification_image.png'), // Provide the image path
+             return ListTile(
+               contentPadding: EdgeInsets.only(bottom: 16),
+               leading: Container(
+                 decoration: BoxDecoration(
+                   color: Color.white,
+                   shape: BoxShape.circle,
+                 ),
+                 child: CachedNetworkImageWidget(
+                   imageUrl: lastNotifications
+                       .elementAt(index)
+                       .,
+                   placeholderWidth: 64,
+                   placeholderHeight: 64,
+                 ),
+               ),
+               onTap: () => null,
              );
            },
          ),
@@ -114,6 +129,7 @@ class _HomePageState extends ConsumerState<HomePage> {
  }
 
   Widget _channelsSection(BuildContext context, WidgetRef ref) {
+    final channels = ref.watch(homeProvider).channels;
     return Column(
       children: <Widget>[
         ListTile(
@@ -133,7 +149,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               crossAxisSpacing: 8, // Adjust the spacing as needed
               mainAxisSpacing: 8, // Adjust the spacing as needed
             ),
-            itemCount: 8, // Number of grid items
+            itemCount: channels!.length, // Number of grid items
             itemBuilder: (context, index) {
               return _buildGridItem(index);
             },

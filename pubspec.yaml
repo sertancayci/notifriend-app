@@ -61,6 +61,9 @@ dev_dependencies:
   firebase_analytics: ^10.6.3
   firebase_crashlytics: ^3.4.3
 
+  #ui
+  cached_network_image: ^3.3.0
+
   flutter_easyloading: ^3.0.5
 
 # The following section is specific to Flutter packages.

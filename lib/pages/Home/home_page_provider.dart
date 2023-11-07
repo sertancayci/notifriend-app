@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/core/helpers/app_services_with.dart';
+import 'package:notifriend/models/channel/channel_response.dart';
 import 'package:notifriend/models/notification/notification_response.dart';
 
 class HomeNotifier extends StateNotifier<HomeState> with AppServices {
@@ -12,26 +13,35 @@ class HomeNotifier extends StateNotifier<HomeState> with AppServices {
     state = state.copyWith(notifications: notificationList);
   }
 
+  Future <void> fetchChannels() async {
+    final List<ChannelResponse> channelList =
+       await channelService.getChannels();
+
+    state = state.copyWith(channels: channelList);
+  }
+
+
   Future<void> init() async {
     state = state.copyWith(isLoading: true);
     await fetchNotifications();
+    await fetchChannels();
     state = state.copyWith(isLoading: false);
   }
 }
 
 
 
-
-
 class HomeState {
-  HomeState({this.notifications, this.isLoading});
+  HomeState({this.notifications, this.isLoading, this.channels});
 
   final List<NotificationResponse>? notifications;
+  final List<ChannelResponse>? channels;
   final bool? isLoading;
 
-  HomeState copyWith({List<NotificationResponse>? notifications,bool? isLoading}) {
+  HomeState copyWith({List<NotificationResponse>? notifications,bool? isLoading, List<ChannelResponse>? channels}) {
     return HomeState(
       notifications: notifications ?? this.notifications,
+      channels: channels ?? this.channels,
       isLoading: isLoading ?? this.isLoading,
     );
   }
