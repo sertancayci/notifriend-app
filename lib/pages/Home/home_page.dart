@@ -11,6 +11,8 @@ final homeProvider = StateNotifierProvider<HomeNotifier,HomeState>((ref) => Home
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
+  static const String routeName = '/home';
+
   @override
   ConsumerState createState() => _HomePageState();
 }
@@ -74,13 +76,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                contentPadding: EdgeInsets.only(bottom: 16),
                leading: Container(
                  decoration: BoxDecoration(
-                   color: Color.white,
+                   color: Colors.white,
                    shape: BoxShape.circle,
                  ),
                  child: CachedNetworkImageWidget(
                    imageUrl: lastNotifications
-                       .elementAt(index)
-                       .,
+                       .elementAt(index).message.thumbnail!,
                    placeholderWidth: 64,
                    placeholderHeight: 64,
                  ),

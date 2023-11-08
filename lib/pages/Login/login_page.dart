@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:notifriend/core/ui/loading_overlay.dart';
 import 'package:notifriend/theme/app_theme.dart';
 
 
@@ -256,5 +257,32 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _loginOnPressed() async {
+    if (_formKey.currentState!.validate()) {
+      final String phoneNumber = _emailController.text;
+      final String password = _passwordController.text;
+
+      await LoadingOverlay.show();
+
+      await widget.userService.login(
+        LoginRequest(
+          telephone: phoneNumber.formatServicePhoneNumberFormat,
+          password: password,
+        ),
+      );
+
+      if ((await widget.userService.profile()).isPhoneNumberVerify) {
+        widget.navigationService
+            .navigateToNamedAndRemoveUntil(HomePage.routeName);
+      } else {
+        await widget.userService.reSendVerifyCode();
+        await widget.navigationService.navigateToNamedAndRemoveUntil(
+          ValidatePhoneNumberPage.routeName,
+          arguments: ValidatePhoneNumberPageArguments(phoneNumber: phoneNumber),
+        );
+      }
+    }
   }
 }
