@@ -14,9 +14,14 @@ class AuthService {
   late AuthRepository _authRepository;
   late StorageService _storageService;
 
-  Future<String> login(LoginRequest request) async {
+  Future<void> login(LoginRequest request) async {
     final response = await _authRepository.login(request);
-    return response.data!.results!;
+    await _saveAuthToken(response.data!.token!);
   }
+
+  Future<void> _saveAuthToken(String data) async {
+    await _storageService.saveAuthToken(data);
+  }
+
 
 }
