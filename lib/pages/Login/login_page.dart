@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:notifriend/core/helpers/app_services_with.dart';
 import 'package:notifriend/core/ui/loading_overlay.dart';
 import 'package:notifriend/models/auth/login_request.dart';
+import 'package:notifriend/pages/Home/home_page.dart';
 import 'package:notifriend/theme/app_theme.dart';
 
 
@@ -269,13 +270,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
       await LoadingOverlay.show();
 
-      await widget.authService.login(
+     var loginEither = await widget.authService.login(
         LoginRequest(
           email: email,
           password: password,
         ),
       );
 
-    }
+        widget.navigationService
+            .navigateToNamedAndRemoveUntil(HomePage.routeName);
+
+      }
   }
 }
