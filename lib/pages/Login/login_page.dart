@@ -11,7 +11,9 @@ import 'package:notifriend/theme/app_theme.dart';
 class LoginPage extends ConsumerStatefulWidget with AppServices {
    LoginPage({super.key});
 
-  @override
+   static const String routeName = '/login';
+
+   @override
   ConsumerState createState() => _LoginPageState();
 }
 
@@ -108,8 +110,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
         obscureText: isPassword,
         style: TextStyle(
-          fontSize: 20,
-          color: Colors.white,
+          fontSize: 16,
+          color: Colors.black,
         ),
       ),
     );
@@ -268,17 +270,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       final String email = _emailController.text;
       final String password = _passwordController.text;
 
-      await LoadingOverlay.show();
+      // await LoadingOverlay.show();
 
-     var loginEither = await widget.authService.login(
+     var loginResponse = await widget.authService.login(
         LoginRequest(
           email: email,
           password: password,
         ),
       );
 
-        widget.navigationService
-            .navigateToNamedAndRemoveUntil(HomePage.routeName);
+     if(loginResponse.success == true) {
+       widget.navigationService
+           .navigateToNamedAndRemoveUntil(HomePage.routeName);
+     }
+
 
       }
   }

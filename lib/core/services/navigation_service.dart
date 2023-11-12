@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class NavigationService {
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   bool _isNavigating = false;
 

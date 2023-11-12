@@ -12,7 +12,7 @@ class AuthRepository {
 
   Future<BaseResponse<LoginResponse>> login(LoginRequest request) async {
     final response = await client.post('${serviceUrlPath}login', request.toJson());
-    final BaseResponse<LoginResponse> result = BaseResponse<LoginResponse>.fromJson(
+    final BaseResponse<LoginResponse> result =  BaseResponse<LoginResponse>.fromJson(
       response.data as Map<String, dynamic>,
       (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
     );

@@ -220,7 +220,7 @@ class RestClient {
     if (options.headers == null) {
       options.headers = {};
     }
-    // await _appendAuth(options);
+    await _appendAuth(options);
 
     return options;
   }

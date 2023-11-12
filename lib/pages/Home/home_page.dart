@@ -131,7 +131,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget _channelsSection(BuildContext context, WidgetRef ref) {
     final channels = ref.watch(homeProvider).channels;
-    return Column(
+    return channels != null ? Column(
       children: <Widget>[
         ListTile(
           title: Text('Channeld'),
@@ -157,7 +157,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ),
       ],
-    );
+    ) : Container();
   }
 
   Widget _buildGridItem(int index) {

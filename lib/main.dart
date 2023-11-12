@@ -11,7 +11,7 @@ import 'package:notifriend/pages/Login/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';
 import 'package:get_it/get_it.dart';
-
+import 'package:notifriend/pages/routes.dart' as routes;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -55,11 +55,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Notifriend',
+      navigatorKey: navigatorKey,
+      initialRoute: routes.initialRoute,
+      onGenerateRoute: routes.generateRoute,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  LoginPage(),
+      home: LoginPage(),
     );
   }
 }

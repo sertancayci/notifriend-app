@@ -19,7 +19,7 @@ class ChannelRepository {
       {int? pageSize, int? perPage, int? currentPage}) async {
     {
       final response = await client.get(
-        '${serviceUrlPath}list?pageSize=$pageSize&perPage=$perPage&currentPage=$currentPage',
+        '${serviceUrlPath}list',
       );
       final BaseListResponse<ChannelResponse> result =
         BaseListResponse<ChannelResponse>.fromJson(
