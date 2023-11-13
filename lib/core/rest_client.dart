@@ -11,7 +11,7 @@ import 'package:quiver/strings.dart';
 class RestClient {
   RestClient(this.dio, this.storageService);
 
-  final String _baseUrl = 'http://192.168.1.24:8086/api/v1/';
+  final String _baseUrl = 'http://192.168.1.20:8086/api/v1/';
   final StorageService storageService;
 
   final Dio dio;

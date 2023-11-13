@@ -57,14 +57,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               SizedBox(height: 16),
               _buildSignInButton(context),
               SizedBox(height: 16),
-              Text(
-                'or',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
+              // Text(
+              //   'or',
+              //   style: TextStyle(
+              //     fontSize: 18,
+              //     fontWeight: FontWeight.w600,
+              //     color: Colors.white,
+              //   ),
+              // ),
               SizedBox(height: 16),
               _buildSocialButtons(),
               SizedBox(height: 48),
@@ -87,11 +87,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       String labelText, TextEditingController controller, IconData icon,
       {bool isPassword = false}) {
     return SizedBox(
-      height: 56,
+      // height: 56,
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
-          filled: true,
+          // filled: true,
           fillColor: Colors.white,
           prefixIcon: Icon(
             icon,
@@ -111,7 +111,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         obscureText: isPassword,
         style: TextStyle(
           fontSize: 16,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     );

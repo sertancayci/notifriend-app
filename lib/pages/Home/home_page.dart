@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notifriend/core/ui/base_scaffold.dart';
 import 'package:notifriend/pages/Home/home_page_provider.dart';
 import 'package:notifriend/pages/widgets/network_image_loading_widget.dart';
 
@@ -39,59 +40,70 @@ class _HomePageState extends ConsumerState<HomePage> {
     // final homeProvider = Provider<HomeNotifier>(
     //         (ref) => HomeNotifier(buildContext: context));
 
-    return  Scaffold(
+    return  BaseScaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Hello ${ref.watch(nameProvider)}'),
+        title: Text('Hello ${ref.watch(nameProvider)}' , style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.black,
       ),
-      body: Column(
-        children: <Widget>[
-          _lastNotificationSection(context, ref),
-          // _forYouChannelSection(context, ref),
-          _channelsSection(context, ref),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            _lastNotificationSection(context, ref),
+            // _forYouChannelSection(context, ref),
+            _channelsSection(context, ref),
+          ],
+        ),
       ),
     );
   }
 
  Widget _lastNotificationSection(BuildContext context, WidgetRef ref) {
    final lastNotifications = ref.watch(homeProvider).notifications;
-   return lastNotifications != null ? Column(
-     children: <Widget>[
-       ListTile(
-         title: Text('Last Notification'),
-         trailing: TextButton(
-           onPressed: () {
-             // Handle "See All" button tap
-           },
-           child: Text('See All'),
+   return lastNotifications != null ? Container(
+     child: Column(
+       mainAxisSize: MainAxisSize.min,
+       children: <Widget>[
+         Container(
+           child: ListTile(
+             title: Text('Last Notification', style: TextStyle(color: Colors.white,),),
+             trailing: TextButton(
+               onPressed: () {
+                 // Handle "See All" button tap
+               },
+               child: Text('See All', style: TextStyle(color: Colors.white,),),
+             ),
+           ),
          ),
-       ),
-       Container(
-         height: 80, // Adjust the height as needed
-         child: ListView.builder(
-           scrollDirection: Axis.horizontal,
-           itemCount: lastNotifications!.length,
-           itemBuilder: (context, index) {
-             return ListTile(
-               contentPadding: EdgeInsets.only(bottom: 16),
-               leading: Container(
-                 decoration: BoxDecoration(
-                   color: Colors.white,
-                   shape: BoxShape.circle,
-                 ),
-                 child: CachedNetworkImageWidget(
-                   imageUrl: lastNotifications
-                       .elementAt(index).message.thumbnail!,
-                   placeholderWidth: 64,
-                   placeholderHeight: 64,
-                 ),
-               ),
-               onTap: () => null,
-             );
-           },
+         Expanded(
+           child: Container(
+             padding: EdgeInsets.only(left: 24, top: 42),
+             child: ListView.builder(
+               scrollDirection: Axis.horizontal,
+               itemCount: lastNotifications.length,
+               itemBuilder: (context, index) {
+                 return ListTile(
+                   contentPadding: EdgeInsets.only(bottom: 16),
+                   leading: Container(
+                     decoration: BoxDecoration(
+                       shape: BoxShape.circle,
+                       color: Colors.white,
+                     ),
+                     child: CachedNetworkImageWidget(
+                       imageUrl: lastNotifications
+                           .elementAt(index).message.thumbnail!,
+                       placeholderWidth: 60,
+                       placeholderHeight: 60,
+                     ),
+                   ),
+                   onTap: () => null,
+                 );
+               },
+             ),
+           ),
          ),
-       ),
-     ],
+       ],
+     ),
    ) : Container();
  }
 
