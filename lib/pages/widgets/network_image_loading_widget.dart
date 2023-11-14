@@ -20,7 +20,7 @@ class CachedNetworkImageWidget extends StatelessWidget {
       imageUrl: imageUrl,
       height: placeholderHeight,
       width: placeholderWidth,
-      fit: BoxFit.contain,
+      fit: BoxFit.fill,
       alignment: Alignment.center,
       errorWidget: (context, url, error) => const Icon(Icons.error),
       imageBuilder: imageBuilder,

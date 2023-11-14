@@ -34,6 +34,27 @@ class ChannelRepository {
     }
   }
 
+  Future<BaseListResponse<ChannelResponse>> getPrivateChannels(
+      {int? pageSize, int? perPage, int? currentPage}) async {
+    {
+
+
+      final response = await client.get(
+        '${serviceUrlPath}privateChannels',
+      );
+      final BaseListResponse<ChannelResponse> result =
+      BaseListResponse<ChannelResponse>.fromJson(
+        response.data as Map<String, dynamic>,
+            (json) => ChannelResponse.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
+
+      return result;
+
+    }
+  }
+
 
 
   Future<BaseResponse<String>> deleteNotifications(

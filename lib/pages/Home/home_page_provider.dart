@@ -20,10 +20,18 @@ class HomeNotifier extends StateNotifier<HomeState> with AppServices {
     state = state.copyWith(channels: channelList);
   }
 
+  //fetchPrivateChannels
+  fetchPrivateChannels() async {
+    final List<ChannelResponse> privateChannels =
+    await channelService.getPrivateChannels();
+
+    state = state.copyWith(forYouChannels: privateChannels);
+  }
 
   Future<void> init() async {
     state = state.copyWith(isLoading: true);
     await fetchNotifications();
+    await fetchPrivateChannels();
     await fetchChannels();
     state = state.copyWith(isLoading: false);
   }
@@ -32,16 +40,18 @@ class HomeNotifier extends StateNotifier<HomeState> with AppServices {
 
 
 class HomeState {
-  HomeState({this.notifications, this.isLoading, this.channels});
+  HomeState({this.notifications, this.isLoading, this.channels, this.forYouChannels});
 
   final List<NotificationResponse>? notifications;
   final List<ChannelResponse>? channels;
+  final List<ChannelResponse>? forYouChannels;
   final bool? isLoading;
 
-  HomeState copyWith({List<NotificationResponse>? notifications,bool? isLoading, List<ChannelResponse>? channels}) {
+  HomeState copyWith({List<NotificationResponse>? notifications,bool? isLoading, List<ChannelResponse>? channels, List<ChannelResponse>? forYouChannels}) {
     return HomeState(
       notifications: notifications ?? this.notifications,
       channels: channels ?? this.channels,
+      forYouChannels: forYouChannels ?? this.forYouChannels,
       isLoading: isLoading ?? this.isLoading,
     );
   }

@@ -18,4 +18,12 @@ class ChannelService {
     return response.data!;
   }
 
+  Future<List<ChannelResponse>> getPrivateChannels() async {
+    final response = await channelRespostory.getPrivateChannels();
+
+    return response.data!;
+  }
+
+
+
 }
