@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
 import 'package:notifriend/pages/Home/home_page_provider.dart';
+import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart';
 import 'package:notifriend/pages/widgets/network_image_loading_widget.dart';
 
 final homeProvider =
@@ -40,36 +41,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
         backgroundColor: Colors.black,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.black,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-            backgroundColor: Colors.black,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Add',
-            backgroundColor: Colors.black,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-            backgroundColor: Colors.black,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-            backgroundColor: Colors.black,
-          ),
-        ],
-      ),
+      bottomNavigationBar: BottomNavigationBarWidget(selectedIndex: 0,),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -256,10 +228,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 height: 285, // Adjust the height as needed
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // You can adjust the number of columns
-                    crossAxisSpacing: 2, // Adjust the spacing as needed
-                    mainAxisSpacing: 2, // Adjust the spacing as needed
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 50,
                   ),
+                  padding: EdgeInsets.only(left: 16, right: 16),
                   itemCount: channels!.length, // Number of grid items
                   itemBuilder: (context, index) {
                     return Column(
