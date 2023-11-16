@@ -1,6 +1,7 @@
 import 'package:notifriend/core/services/navigation_service.dart';
 import 'package:notifriend/core/services/storage/storage_service.dart';
 import 'package:notifriend/services/auth/auth_service.dart';
+import 'package:notifriend/services/category/category_service.dart';
 import 'package:notifriend/services/channel/channel_service.dart';
 import 'package:notifriend/services/notification/notification_service.dart';
 import 'package:notifriend/main.dart';
@@ -13,4 +14,5 @@ mixin AppServices {
   final ChannelService channelService = getIt.get<ChannelService>();
   final AuthService authService = getIt.get<AuthService>();
   final UserService userService = getIt.get<UserService>();
+  final CategoryService categoryService = getIt.get<CategoryService>();
 }

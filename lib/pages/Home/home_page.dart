@@ -25,6 +25,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     ref.read(homeProvider.notifier).fetchNotifications();
     ref.read(homeProvider.notifier).fetchPrivateChannels();
     ref.read(homeProvider.notifier).fetchChannels();
+    // ref.watch(homeProvider.notifier).init();
+
   }
 
   @override

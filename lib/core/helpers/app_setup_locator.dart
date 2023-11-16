@@ -3,10 +3,12 @@ import 'package:notifriend/core/rest_client.dart';
 import 'package:notifriend/core/services/storage/storage_service.dart';
 import 'package:notifriend/main.dart';
 import 'package:notifriend/repositories/auth/auth_repository.dart';
+import 'package:notifriend/repositories/category/category_repository.dart';
 import 'package:notifriend/repositories/channel/channel_repository.dart';
 import 'package:notifriend/repositories/notification/notification_repository.dart';
 import 'package:notifriend/repositories/user/user_repository.dart';
 import 'package:notifriend/services/auth/auth_service.dart';
+import 'package:notifriend/services/category/category_service.dart';
 import 'package:notifriend/services/channel/channel_service.dart';
 import 'package:notifriend/services/notification/notification_service.dart';
 import 'package:notifriend/services/user/user_service.dart';
@@ -39,6 +41,11 @@ class AppSetupLocator {
           client: getIt<RestClient>(),
         ),
       )
+      ..registerLazySingleton<CategoryRepository>(
+        () => CategoryRepository(
+          client: getIt<RestClient>(),
+        ),
+      )
       //Services
       ..registerLazySingleton<NotificationService>(
         () => NotificationService(
@@ -63,7 +70,11 @@ class AppSetupLocator {
           userRepository: getIt<UserRepository>(),
           storageService: getIt<StorageService>(),
         )
+      )
+      ..registerFactory<CategoryService>(
+        () => CategoryService(
+          categoryRepository: getIt<CategoryRepository>(),
+            storageService: getIt<StorageService>(),)
       );
-
   }
 }
