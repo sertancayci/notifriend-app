@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
+import 'package:notifriend/pages/Category/category_page.dart';
 import 'package:notifriend/pages/Home/home_page.dart';
 import 'package:notifriend/pages/Login/login_page.dart';
 import 'package:notifriend/pages/Splash/splash_page.dart';
-
 
 String initialRoute = SplashPage.routeName;
 
@@ -35,6 +35,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (BuildContext context) => HomePage(),
+      );
+    case CategoryPage.routeName:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (BuildContext context) => CategoryPage(),
       );
     // case NotificationPage.routeName:
     //   return MaterialPageRoute(

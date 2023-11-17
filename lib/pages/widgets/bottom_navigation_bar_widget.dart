@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/core/services/navigation_service.dart';
 import 'package:notifriend/main.dart';
+import 'package:notifriend/pages/Category/category_page.dart';
 import 'package:notifriend/pages/Home/home_page.dart';
 class BottomNavigationBarWidget extends StatefulWidget {
   final int selectedIndex;
@@ -29,9 +30,10 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
             if (index == 0) {
               _navigationService.navigateToNamedAndRemoveUntil(HomePage.routeName);
             }
-            // else if (index == 1 && widget.selectedIndex != index) {
-            //   _navigationService.navigateToNamedAndRemoveUntil(CategoryPage.routeName);
-            // } else if (index == 2 && widget.selectedIndex != index) {
+            else if (index == 1 && widget.selectedIndex != index) {
+              _navigationService.navigateToNamedAndRemoveUntil(CategoryPage.routeName);
+            }
+            // else if (index == 2 && widget.selectedIndex != index) {
             //   _navigationService.navigateToNamedAndRemoveUntil(NewNotif.routeName);
             // } else if (index == 3) {
             //   _navigationService.navigateToNamedAndRemoveUntil(NotificationsPage.routeName);

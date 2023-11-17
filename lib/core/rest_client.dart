@@ -1,17 +1,18 @@
-import 'package:notifriend/core/helpers/extensions.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:notifriend/core/services/storage/storage_service.dart';
 import 'package:notifriend/main.dart';
-import 'package:dio/dio.dart';
-import 'package:notifriend/services/base/base_response.dart';
-import 'package:fpdart/fpdart.dart';
-import 'exceptions/app_exceptions.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:quiver/strings.dart';
+
+import 'exceptions/app_exceptions.dart';
 
 class RestClient {
   RestClient(this.dio, this.storageService);
 
-  final String _baseUrl = 'http://192.168.1.24:8086/api/v1/';
+  // final String _baseUrl = 'http://192.168.1.24:8086/api/v1/';
+
+  final String _baseUrl = 'http://192.168.1.31:8086/api/v1/';
   final StorageService storageService;
 
   final Dio dio;
@@ -162,7 +163,7 @@ class RestClient {
       url = _baseUrl + url;
 
       var options = Options();
-      options =  await _prepareCallCache(options);
+      options = await _prepareCallCache(options);
       options.headers!['Content-Type'] = 'application/json';
       options.headers!['Accept'] = 'application/json';
 
@@ -224,7 +225,6 @@ class RestClient {
 
     return options;
   }
-
 
   Future<void> _appendAuth(Options options) async {
     final String? token = await storageService.getAuthToken();

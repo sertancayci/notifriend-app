@@ -1,5 +1,5 @@
-import 'package:notifriend/core/helpers/app_services_with.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notifriend/core/helpers/app_services_with.dart';
 import 'package:notifriend/models/category/category_response.dart';
 
 class CategoryNotifier extends StateNotifier<CategoryState> with AppServices {
@@ -7,7 +7,7 @@ class CategoryNotifier extends StateNotifier<CategoryState> with AppServices {
 
   fetchCategories() async {
     final List<CategoryResponse> categoryList =
-    await categoryService.getCategories();
+        await categoryService.getCategories();
 
     state = state.copyWith(categories: categoryList);
   }
@@ -17,7 +17,6 @@ class CategoryNotifier extends StateNotifier<CategoryState> with AppServices {
     await fetchCategories();
     state = state.copyWith(isLoading: false);
   }
-
 }
 
 class CategoryState {
@@ -26,11 +25,12 @@ class CategoryState {
   final List<CategoryResponse>? categories;
   final bool? isLoading;
 
-  CategoryState copyWith(
-      {List<CategoryResponse>? categories,bool? isLoading,}) {
+  CategoryState copyWith({
+    List<CategoryResponse>? categories,
+    bool? isLoading,
+  }) {
     return CategoryState(
       categories: categories,
     );
   }
-
 }

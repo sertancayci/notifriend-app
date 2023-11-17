@@ -25,5 +25,4 @@ class CategoryRepository {
       return result;
     }
   }
-
 }
