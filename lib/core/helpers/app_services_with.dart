@@ -16,5 +16,4 @@ mixin AppServices {
   final AuthService authService = getIt.get<AuthService>();
   final UserService userService = getIt.get<UserService>();
   final CategoryService categoryService = getIt.get<CategoryService>();
-  final ChannelService channelService = getIt.get<ChannelService>();
 }

@@ -1,11 +1,9 @@
-
 import 'package:fpdart/fpdart.dart';
 import 'package:notifriend/core/rest_client.dart';
 import 'package:notifriend/models/channel/channel_response.dart';
 
-import '../../services/base/base_response.dart';
 import '../../services/base/base_list_response.dart';
-
+import '../../services/base/base_response.dart';
 
 class ChannelRepository {
   ChannelRepository({required this.client});
@@ -13,49 +11,50 @@ class ChannelRepository {
   final String serviceUrlPath = 'channel/';
   RestClient client;
 
-
-
   Future<BaseListResponse<ChannelResponse>> getChannels(
-      {int? pageSize, int? perPage, int? currentPage}) async {
+      {int? categoryId, int? pageSize, int? perPage, int? currentPage}) async {
     {
-      final response = await client.get(
-        '${serviceUrlPath}list',
-      );
+      String url = '${serviceUrlPath}list';
+
+      if (categoryId != null) {
+        url += '?categoryId=$categoryId';
+      }
+
+      final response = await client.get(url);
+
+      // final response = await client.get(
+      //   '${serviceUrlPath}list',
+      // );
+
       final BaseListResponse<ChannelResponse> result =
-        BaseListResponse<ChannelResponse>.fromJson(
-          response.data as Map<String, dynamic>,
-          (json) => ChannelResponse.fromJson(
-            json as Map<String, dynamic>,
-          ),
-        );
+          BaseListResponse<ChannelResponse>.fromJson(
+        response.data as Map<String, dynamic>,
+        (json) => ChannelResponse.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
 
       return result;
-
     }
   }
 
   Future<BaseListResponse<ChannelResponse>> getPrivateChannels(
       {int? pageSize, int? perPage, int? currentPage}) async {
     {
-
-
       final response = await client.get(
         '${serviceUrlPath}privateChannels',
       );
       final BaseListResponse<ChannelResponse> result =
-      BaseListResponse<ChannelResponse>.fromJson(
+          BaseListResponse<ChannelResponse>.fromJson(
         response.data as Map<String, dynamic>,
-            (json) => ChannelResponse.fromJson(
+        (json) => ChannelResponse.fromJson(
           json as Map<String, dynamic>,
         ),
       );
 
       return result;
-
     }
   }
-
-
 
   Future<BaseResponse<String>> deleteNotifications(
     List<String> ids,
