@@ -2,22 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
 import 'package:notifriend/models/channel/channel_response.dart'; // Import your ChannelResponse model
-import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart';
-import 'package:notifriend/providers/channel_notifier.dart'; // Import your ChannelNotifier
-import 'package:notifriend/services/channels_service.dart'; // Import your ChannelsService
+import 'package:notifriend/pages/Channel/channel_page_provider.dart';
+import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart'; // Import your ChannelsService
 
-final channelsProvider = FutureProvider<List<ChannelResponse>>((ref) async {
-  final notifier = ref.watch(channelProvider.notifier);
-  final categoryId = notifier.categoryId;
-  if (categoryId != null) {
-    return ChannelsService.fetchChannelsByCategoryId(categoryId);
-  } else {
-    return ChannelsService.fetchAllChannels();
-  }
-});
+final channelsProvider = StateNotifierProvider<ChannelNotifier, ChannelState>(
+    (ref) => ChannelNotifier());
 
 class ChannelsPage extends ConsumerStatefulWidget {
   final int? categoryId;
+
+  static const String routeName = '/channels';
 
   ChannelsPage({this.categoryId, Key? key}) : super(key: key);
 
@@ -26,6 +20,11 @@ class ChannelsPage extends ConsumerStatefulWidget {
 }
 
 class _CategoryChannelsPageState extends ConsumerState<ChannelsPage> {
+  void initState() {
+    super.initState();
+    ref.read(channelsProvider.notifier).fetchChannels(widget.categoryId!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
@@ -73,25 +72,24 @@ class _CategoryChannelsPageState extends ConsumerState<ChannelsPage> {
   }
 
   Widget _buildChannelsGrid(BuildContext context) {
+    final channels = ref.watch(channelsProvider).channels;
+    if (channels == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Expanded(
       child: Consumer(
         builder: (context, watch, child) {
-          final channels = watch(channelsProvider);
-          return channels.when(
-            loading: () => Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) => Center(child: Text('Error: $error')),
-            data: (channelList) {
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 174 / 117,
-                ),
-                itemCount: channelList.length,
-                itemBuilder: (context, index) {
-                  final channel = channelList[index];
-                  return _buildChannelItem(channel);
-                },
-              );
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 174 / 117,
+            ),
+            itemCount: channels!.length,
+            itemBuilder: (context, index) {
+              final channel = channels[index];
+              return _buildChannelItem(channel);
             },
           );
         },
@@ -108,14 +106,14 @@ class _CategoryChannelsPageState extends ConsumerState<ChannelsPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.network(
-              channel.imageUrl,
+              channel.thumbnail!,
               width: 174,
               height: 117,
               fit: BoxFit.cover,
             ),
             SizedBox(height: 8),
             Text(
-              channel.name,
+              channel.title,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

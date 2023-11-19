@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notifriend/core/helpers/app_services_with.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
 import 'package:notifriend/models/category/category_response.dart';
 import 'package:notifriend/pages/Category/category_page_provider.dart';
+import 'package:notifriend/pages/Channel/channel_page.dart';
 import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart';
 
 final categoryProvider =
@@ -10,8 +12,8 @@ final categoryProvider =
   return CategoryNotifier();
 });
 
-class CategoryPage extends ConsumerStatefulWidget {
-  const CategoryPage({super.key});
+class CategoryPage extends ConsumerStatefulWidget with AppServices {
+  CategoryPage({super.key});
 
   static const String routeName = '/categories';
 
@@ -70,7 +72,11 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
 
   Widget _buildCategoryCard(CategoryResponse category) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        widget.navigationService.navigateToNamedAndRemoveUntil(
+            ChannelsPage.routeName,
+            arguments: category.id);
+      },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: EdgeInsets.all(8),
