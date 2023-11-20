@@ -6,7 +6,10 @@ import 'package:notifriend/models/notification/notification_response.dart';
 class ChannelNotifier extends StateNotifier<ChannelState> with AppServices {
   ChannelNotifier() : super(ChannelState());
 
-  Future<void> fetchChannels(int categoryId) async {
+  Future<void> fetchChannels(int? categoryId) async {
+    if (categoryId == null) {
+      return;
+    }
     final List<ChannelResponse> channelList =
         await channelService.getChannels(categoryId: categoryId);
 
@@ -40,30 +43,3 @@ class ChannelState {
     );
   }
 }
-
-//
-// class HomeNotifier extends BaseChangeNotifier with AppServices {
-//   HomeNotifier({required super.buildContext}) {
-//     logger.i('HomeNotifier');
-//     init();
-//   }
-//
-//   List<NotificationResponse> _notificationList = [];
-//
-//   List<NotificationResponse> get notificationList => _notificationList;
-//
-//   set notificationList(List<NotificationResponse> value) {
-//     _notificationList = value;
-//     notifyListeners();
-//   }
-//
-//   Future<void> init() async {
-//     final notificationListResponse =
-//     await notificationService.getNotifications();
-//
-//     notificationList = notificationListResponse;
-//
-//     viewState = ViewState.Idle;
-//     dataState = DataState.HasData;
-//   }
-// }

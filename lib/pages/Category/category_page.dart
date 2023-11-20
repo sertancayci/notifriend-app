@@ -75,7 +75,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
       onTap: () {
         widget.navigationService.navigateToNamedAndRemoveUntil(
             ChannelsPage.routeName,
-            arguments: category.id);
+            arguments: ChannelsPagePageArguments(categoryId: category.id));
       },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

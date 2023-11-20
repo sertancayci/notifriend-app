@@ -45,7 +45,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ChannelsPage.routeName:
       return MaterialPageRoute(
         settings: settings,
-        builder: (BuildContext context) => ChannelsPage(),
+        builder: (BuildContext context) => ChannelsPage(
+          args: settings.arguments as ChannelsPagePageArguments,
+        ),
       );
     // case NotificationPage.routeName:
     //   return MaterialPageRoute(
