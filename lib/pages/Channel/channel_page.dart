@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
 import 'package:notifriend/models/channel/channel_response.dart'; // Import your ChannelResponse model
 import 'package:notifriend/pages/Channel/channel_page_provider.dart';
-import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart'; // Import your ChannelsService
+import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart';
+import 'package:notifriend/pages/widgets/network_image_loading_widget.dart'; // Import your ChannelsService
 
 class ChannelsPagePageArguments {
   ChannelsPagePageArguments({required this.categoryId});
@@ -94,7 +95,7 @@ class _CategoryChannelsPageState extends ConsumerState<ChannelsPage> {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 174 / 117,
+              childAspectRatio: 1.2,
             ),
             itemCount: channels!.length,
             itemBuilder: (context, index) {
@@ -108,31 +109,25 @@ class _CategoryChannelsPageState extends ConsumerState<ChannelsPage> {
   }
 
   Widget _buildChannelItem(ChannelResponse channel) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      margin: EdgeInsets.all(8),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.network(
-              channel.thumbnail!,
-              width: 174,
-              height: 117,
-              fit: BoxFit.cover,
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CachedNetworkImageWidget(
+              imageUrl: channel.thumbnail!,
+              placeholderHeight: 96,
+              placeholderWidth: 153),
+          SizedBox(height: 8),
+          Text(
+            channel.title,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
-            SizedBox(height: 8),
-            Text(
-              channel.title,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
