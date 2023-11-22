@@ -6,6 +6,7 @@ import 'package:notifriend/pages/Channel/channel_page.dart';
 import 'package:notifriend/pages/Home/home_page.dart';
 import 'package:notifriend/pages/Login/login_page.dart';
 import 'package:notifriend/pages/Splash/splash_page.dart';
+import 'package:notifriend/pages/channel/channel_detail/channel_detail_page.dart';
 
 String initialRoute = SplashPage.routeName;
 
@@ -47,6 +48,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (BuildContext context) => ChannelsPage(
           args: settings.arguments as ChannelsPagePageArguments,
+        ),
+      );
+    case ChannelDetailPage.routeName:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (BuildContext context) => ChannelDetailPage(
+          args: settings.arguments as ChannelDetailPageArguments,
         ),
       );
     // case NotificationPage.routeName:

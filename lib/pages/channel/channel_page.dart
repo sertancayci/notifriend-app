@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notifriend/core/helpers/app_services_with.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
 import 'package:notifriend/models/channel/channel_response.dart'; // Import your ChannelResponse model
 import 'package:notifriend/pages/Channel/channel_page_provider.dart';
@@ -15,7 +16,7 @@ class ChannelsPagePageArguments {
 final channelsProvider = StateNotifierProvider<ChannelNotifier, ChannelState>(
     (ref) => ChannelNotifier());
 
-class ChannelsPage extends ConsumerStatefulWidget {
+class ChannelsPage extends ConsumerStatefulWidget with AppServices {
   static const String routeName = '/channels';
 
   ChannelsPage({this.args, Key? key}) : super(key: key);
@@ -45,14 +46,16 @@ class _CategoryChannelsPageState extends ConsumerState<ChannelsPage> {
         backgroundColor: Colors.black,
       ),
       bottomNavigationBar: BottomNavigationBarWidget(selectedIndex: 2),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            _buildSearchBar(context),
-            SizedBox(height: 16),
-            _buildChannelsGrid(context),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: [
+              _buildSearchBar(context),
+              SizedBox(height: 16),
+              _buildChannelsGrid(context),
+            ],
+          ),
         ),
       ),
     );
@@ -109,25 +112,31 @@ class _CategoryChannelsPageState extends ConsumerState<ChannelsPage> {
   }
 
   Widget _buildChannelItem(ChannelResponse channel) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CachedNetworkImageWidget(
-              imageUrl: channel.thumbnail!,
-              placeholderHeight: 96,
-              placeholderWidth: 153),
-          SizedBox(height: 8),
-          Text(
-            channel.title,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        widget.navigationService
+            .navigateToNamedAndRemoveUntil(ChannelDetailPage.routeName);
+      },
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CachedNetworkImageWidget(
+                imageUrl: channel.thumbnail!,
+                placeholderHeight: 96,
+                placeholderWidth: 153),
+            SizedBox(height: 8),
+            Text(
+              channel.title,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
