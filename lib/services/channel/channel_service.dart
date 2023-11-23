@@ -21,4 +21,10 @@ class ChannelService {
 
     return response.data!;
   }
+
+  Future<ChannelResponse> getChannelDetail(channelId) async {
+    final response = await channelRespostory.getChannelDetail(channelId);
+
+    return response.data!;
+  }
 }

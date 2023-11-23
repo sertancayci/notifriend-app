@@ -71,4 +71,21 @@ class ChannelRepository {
       return result;
     }
   }
+
+  Future<BaseResponse<ChannelResponse>> getChannelDetail(channelId) async {
+    {
+      final response = await client.get(
+        '${serviceUrlPath}$channelId',
+      );
+      final BaseResponse<ChannelResponse> result =
+          BaseResponse<ChannelResponse>.fromJson(
+        response.data as Map<String, dynamic>,
+        (json) => ChannelResponse.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
+
+      return result;
+    }
+  }
 }

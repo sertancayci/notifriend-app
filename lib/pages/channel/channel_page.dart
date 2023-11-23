@@ -4,6 +4,7 @@ import 'package:notifriend/core/helpers/app_services_with.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
 import 'package:notifriend/models/channel/channel_response.dart'; // Import your ChannelResponse model
 import 'package:notifriend/pages/Channel/channel_page_provider.dart';
+import 'package:notifriend/pages/channel/channel_detail/channel_detail_page.dart';
 import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart';
 import 'package:notifriend/pages/widgets/network_image_loading_widget.dart'; // Import your ChannelsService
 

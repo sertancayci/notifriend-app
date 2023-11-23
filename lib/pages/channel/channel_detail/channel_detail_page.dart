@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
+import 'package:notifriend/pages/channel/channel_detail/channel_detail_page_provider.dart';
 import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart';
+import 'package:notifriend/pages/widgets/network_image_loading_widget.dart';
 
 class ChannelDetailPageArguments {
   ChannelDetailPageArguments({required this.channelId});
 
   final int channelId;
 }
+
+final channelDetailProvider =
+    StateNotifierProvider<ChannelDetailNotifier, ChannelDetailState>(
+        (ref) => ChannelDetailNotifier());
 
 class ChannelDetailPage extends ConsumerStatefulWidget {
   const ChannelDetailPage({required this.args, super.key});
@@ -21,6 +27,15 @@ class ChannelDetailPage extends ConsumerStatefulWidget {
 }
 
 class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
+  void initState() {
+    super.initState();
+    if (widget.args!.channelId != null) {
+      ref
+          .read(channelDetailProvider.notifier)
+          .fetchChannelDetail(widget.args!.channelId!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
@@ -34,20 +49,21 @@ class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: _buildBody(),
+          child: _buildBody(context),
         ),
       ),
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
+    final channel = ref.watch(channelDetailProvider).channelDetail;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Image.network(
-          context.read(imageProvider),
-          height: 200, // Adjust height as needed
-          fit: BoxFit.cover,
+        CachedNetworkImageWidget(
+          imageUrl: channel!.thumbnail!,
+          placeholderHeight: 300,
+          placeholderWidth: double.maxFinite,
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -55,13 +71,13 @@ class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                context.read(titleProvider),
+                channel.title,
                 style: TextStyle(
                     fontSize: 20, color: Colors.white, fontFamily: 'Roboto'),
               ),
               SizedBox(height: 8),
               Text(
-                context.read(descriptionProvider),
+                channel.description,
                 style: TextStyle(
                     fontSize: 16, color: Colors.white, fontFamily: 'Roboto'),
               ),
