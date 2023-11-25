@@ -8,6 +8,7 @@ class ChannelResponse {
       this.thumbnail,
       required this.status,
       required this.createdAt,
+      required this.owner,
       this.updatedAt,
       this.deletedAt});
 
@@ -23,6 +24,7 @@ class ChannelResponse {
       createdAt: json['created_at'] as String,
       updatedAt: json['updated_at'] as String?,
       deletedAt: json['deleted_at'] as String?,
+      owner: OwnerResponse.fromJson(json['owner'] as Map<String, dynamic>),
     );
   }
 
@@ -36,4 +38,37 @@ class ChannelResponse {
   final String createdAt;
   final String? updatedAt;
   final String? deletedAt;
+  final OwnerResponse owner;
+}
+
+class OwnerResponse {
+  OwnerResponse({
+    required this.id,
+    required this.name,
+    required this.email,
+    this.username,
+    this.avatar,
+    required this.status,
+    this.token,
+  });
+
+  final int id;
+  final String name;
+  final String email;
+  final String? username;
+  final String? avatar;
+  final String status;
+  final String? token;
+
+  factory OwnerResponse.fromJson(Map<String, dynamic> json) {
+    return OwnerResponse(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      status: json['status'] as String,
+      username: json['username'] as String?,
+      avatar: json['avatar'] as String?,
+      token: json['token'] as String?,
+    );
+  }
 }

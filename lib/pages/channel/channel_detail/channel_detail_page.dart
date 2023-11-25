@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notifriend/core/ui/base_scaffold.dart';
+import 'package:notifriend/models/channel/channel_response.dart';
 import 'package:notifriend/pages/channel/channel_detail/channel_detail_page_provider.dart';
 import 'package:notifriend/pages/widgets/bottom_navigation_bar_widget.dart';
 import 'package:notifriend/pages/widgets/network_image_loading_widget.dart';
@@ -82,7 +83,7 @@ class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
                     fontSize: 16, color: Colors.white, fontFamily: 'Roboto'),
               ),
               SizedBox(height: 16),
-              _buildUserPart(context),
+              _buildUserPart(context, channel.owner),
               Divider(color: Colors.white),
               _buildMessagesList(context),
             ],
@@ -92,24 +93,19 @@ class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
     );
   }
 
-  Widget _buildUserPart(BuildContext context) {
+  Widget _buildUserPart(BuildContext context, OwnerResponse owner) {
     return Row(
       children: [
         CircleAvatar(
           radius: 20, // Adjust radius as needed
-          backgroundImage: NetworkImage(context.read(userAvatarProvider)),
+          backgroundImage: NetworkImage(owner.avatar!),
         ),
         SizedBox(width: 8),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              context.read(userNameProvider),
-              style: TextStyle(
-                  fontSize: 12, color: Colors.white, fontFamily: 'Roboto'),
-            ),
-            Text(
-              context.read(userSurnameProvider),
+              owner.username != null ? owner.username! : owner.name,
               style: TextStyle(
                   fontSize: 12, color: Colors.white, fontFamily: 'Roboto'),
             ),
