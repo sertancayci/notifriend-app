@@ -16,6 +16,15 @@ class ChannelDetailNotifier extends StateNotifier<ChannelDetailState>
     state = state.copyWith(channelDetail: channelDetail);
   }
 
+  Future<void> fetchChannelNotifications(int? channelId) async {
+    if (channelId == null) {
+      return;
+    }
+    final channelDetail = await channelService.getChannelDetail(channelId);
+
+    state = state.copyWith(channelDetail: channelDetail);
+  }
+
   Future<void> init(int? categoryId) async {
     state = state.copyWith(isLoading: true);
     await fetchChannelDetail(categoryId!);

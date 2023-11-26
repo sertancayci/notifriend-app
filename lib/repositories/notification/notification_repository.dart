@@ -1,19 +1,15 @@
-
 import 'package:fpdart/fpdart.dart';
 import 'package:notifriend/core/rest_client.dart';
 import 'package:notifriend/models/notification/notification_response.dart';
 
-import '../../services/base/base_response.dart';
 import '../../services/base/base_list_response.dart';
-
+import '../../services/base/base_response.dart';
 
 class NotificationRepository {
   NotificationRepository({required this.client});
 
   final String serviceUrlPath = 'notification/';
   RestClient client;
-
-
 
   Future<BaseListResponse<NotificationResponse>> getNotifications(
       {int? pageSize, int? perPage, int? currentPage}) async {
@@ -22,15 +18,35 @@ class NotificationRepository {
         '${serviceUrlPath}list',
       );
       final BaseListResponse<NotificationResponse> result =
-        BaseListResponse<NotificationResponse>.fromJson(
-          response.data as Map<String, dynamic>,
-          (json) => NotificationResponse.fromJson(
-            json as Map<String, dynamic>,
-          ),
-        );
+          BaseListResponse<NotificationResponse>.fromJson(
+        response.data as Map<String, dynamic>,
+        (json) => NotificationResponse.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
 
       return result;
+    }
+  }
 
+  Future<BaseListResponse<NotificationResponse>> getChannelNotifications(
+      channelId,
+      {int? pageSize,
+      int? perPage,
+      int? currentPage}) async {
+    {
+      final response = await client.get(
+        '${serviceUrlPath}channelId',
+      );
+      final BaseListResponse<NotificationResponse> result =
+          BaseListResponse<NotificationResponse>.fromJson(
+        response.data as Map<String, dynamic>,
+        (json) => NotificationResponse.fromJson(
+          json as Map<String, dynamic>,
+        ),
+      );
+
+      return result;
     }
   }
 
