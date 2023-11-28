@@ -34,6 +34,9 @@ class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
       ref
           .read(channelDetailProvider.notifier)
           .fetchChannelDetail(widget.args!.channelId!);
+      ref
+          .read(channelDetailProvider.notifier)
+          .fetchChannelNotifications(widget.args!.channelId!);
     }
   }
 
@@ -85,7 +88,7 @@ class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
               SizedBox(height: 16),
               _buildUserPart(context, channel.owner),
               Divider(color: Colors.white),
-              _buildMessagesList(context),
+              _buildMessagesList(context, ref),
             ],
           ),
         ),
@@ -115,13 +118,12 @@ class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
     );
   }
 
-  Widget _buildMessagesList(BuildContext context) {
-    final messages = context.read(messagesProvider);
-
+  Widget _buildMessagesList(BuildContext context, WidgetRef ref) {
+    final notifications = ref.watch(channelDetailProvider).notifications;
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: messages.length,
+      itemCount: notifications.length,
       itemBuilder: (context, index) {
         return ListTile(
           leading: CircleAvatar(

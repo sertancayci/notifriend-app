@@ -17,15 +17,16 @@ class ChannelDetailNotifier extends StateNotifier<ChannelDetailState>
   }
 
   Future<void> fetchChannelNotifications(int channelId) async {
-   final channelNotification = await notificationService.getChannelNotifications(channelId);
+    final channelNotification =
+        await notificationService.getChannelNotifications(channelId);
 
-    state = state.copyWith(channelNotification: channelNotification);
+    state = state.copyWith(notifications: channelNotification);
   }
 
-  Future<void> init(int? categoryId) async {
+  Future<void> init(int? categoryId, int? channelId) async {
     state = state.copyWith(isLoading: true);
     await fetchChannelDetail(categoryId!);
-    await fetchChannelNotifications(channelId);
+    await fetchChannelNotifications(channelId!);
     state = state.copyWith(isLoading: false);
   }
 }
@@ -34,23 +35,22 @@ class ChannelDetailState {
   ChannelDetailState({
     this.isLoading,
     this.channelDetail,
-    required this.channelNotification,
+    this.notifications,
   });
 
   final ChannelResponse? channelDetail;
   final bool? isLoading;
-  final NotificationResponse channelNotification;
+  final NotificationResponse? notifications;
 
-  ChannelDetailState copyWith(
-      {List<NotificationResponse>? notifications,
-      bool? isLoading,
-      ChannelResponse? channelDetail,
-        List<NotificationResponse>? channelNotification
-      List<ChannelResponse>? forYouChannels}) {
+  ChannelDetailState copyWith({
+    List<NotificationResponse>? notifications,
+    bool? isLoading,
+    ChannelResponse? channelDetail,
+  }) {
     return ChannelDetailState(
       channelDetail: channelDetail ?? this.channelDetail,
       isLoading: isLoading ?? this.isLoading,
-      channelNotification: channelNotification ?? this.channelNotification,
+      notifications: this.notifications,
     );
   }
 }
