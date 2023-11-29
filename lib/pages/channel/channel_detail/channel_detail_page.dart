@@ -123,17 +123,17 @@ class _ChannelDetailPageState extends ConsumerState<ChannelDetailPage> {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: notifications.length,
+      itemCount: notifications!.length,
       itemBuilder: (context, index) {
         return ListTile(
           leading: CircleAvatar(
             radius: 20, // Adjust radius as needed
             // Use a unique avatar for each user or sender
           ),
-          title: Text(messages[index].sender,
+          title: Text(notifications.elementAt(index).message.message,
               style: TextStyle(
                   fontSize: 12, color: Colors.white, fontFamily: 'Roboto')),
-          subtitle: Text(messages[index].text,
+          subtitle: Text(notifications.elementAt(index).message.message,
               style: TextStyle(
                   fontSize: 12, color: Colors.white, fontFamily: 'Roboto')),
         );

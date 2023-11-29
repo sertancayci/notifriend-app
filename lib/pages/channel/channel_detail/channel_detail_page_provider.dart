@@ -17,7 +17,7 @@ class ChannelDetailNotifier extends StateNotifier<ChannelDetailState>
   }
 
   Future<void> fetchChannelNotifications(int channelId) async {
-    final channelNotification =
+    final List<NotificationResponse> channelNotification =
         await notificationService.getChannelNotifications(channelId);
 
     state = state.copyWith(notifications: channelNotification);
@@ -40,7 +40,7 @@ class ChannelDetailState {
 
   final ChannelResponse? channelDetail;
   final bool? isLoading;
-  final NotificationResponse? notifications;
+  final List<NotificationResponse>? notifications;
 
   ChannelDetailState copyWith({
     List<NotificationResponse>? notifications,
@@ -50,7 +50,7 @@ class ChannelDetailState {
     return ChannelDetailState(
       channelDetail: channelDetail ?? this.channelDetail,
       isLoading: isLoading ?? this.isLoading,
-      notifications: this.notifications,
+      notifications: notifications ?? this.notifications,
     );
   }
 }
